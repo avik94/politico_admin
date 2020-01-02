@@ -19,62 +19,119 @@
           @input = "selectElection(election2);"
         ></v-select>
       </v-col>
-    <v-col cols="6">
-      <v-dialog v-model="dialog2" width="500" >
-        <template v-slot:activator="{ on }">
-          <v-btn color="red lighten-2" dark v-on="on" @click="newItem()">
-            Add New
-          </v-btn>
-        </template>
+      <v-col cols="6">
+        <v-dialog v-model="dialog2" width="500" >
+          <template v-slot:activator="{ on }">
+            <v-btn color="red lighten-2" dark v-on="on" @click="newItem()">
+              Add New
+            </v-btn>
+          </template>
 
-        <v-card style="padding:20px">
-          <v-row>
-            <v-col cols="12">
-              <v-form  v-model="valid" ref="form">
+          <v-card style="padding:20px">
+            <v-row>
+              <v-col cols="12">
                 <v-select
-                  v-model="election"
-                  :items="items"
-                  item-text="name"
-                  item-value="id"
-                  label="Select Election"
+                  v-model="selectType"
+                  :items="selectTypeItem"
+                  @input="itemChanged"
+                  label="Select Type"
                   :rules="[v => !!v || 'Item is required']"
                   outlined
                 ></v-select>
+                <v-form  v-model="valid" ref="form">                  
+                  <div v-if="bird">
+                    <v-select
+                      v-model="election"
+                      :items="items"
+                      item-text="name"
+                      item-value="id"
+                      label="Select Election"
+                      outlined
+                    ></v-select>
 
-                <v-text-field
-                  v-model="spectrum"
-                  label="Spectrum Name"
-                  :rules="[v => !!v || 'Item is required']"
-                  outlined
-                ></v-text-field>
+                    <v-text-field
+                      v-model="spectrum"
+                      label="Spectrum Name"
+                      outlined
+                    ></v-text-field>
 
-                <v-text-field
-                  v-model="min"
-                  label="Min Limit"
-                  :rules="[v => !!v || 'Item is required']"
-                  outlined
-                ></v-text-field>
+                    <v-text-field
+                      v-model="min"
+                      label="Min Limit"
+                      outlined
+                    ></v-text-field>
 
-                <v-text-field
-                  v-model="max"
-                  label="Max Limit"
-                  :rules="[v => !!v || 'Item is required']"
-                  outlined
-                ></v-text-field>
+                    <v-text-field
+                      v-model="max"
+                      label="Max Limit"
+                      outlined
+                    ></v-text-field>
 
-                <v-text-field
-                  v-model="issue"
-                  label="Issue"
-                  :rules="[v => !!v || 'Item is required']"
-                  outlined
-                ></v-text-field>
-              </v-form>
-              <v-btn color="blue darken-1" dark @click="submit()" :disabled="!valid" :loading="loading">Save</v-btn>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-dialog>
-    </v-col>  
+                    <v-text-field
+                      v-model="issue"
+                      label="Issue"
+                      outlined
+                    ></v-text-field>
+                  </div>
+
+                  <div v-if="text">
+                    <v-select
+                      v-model="election"
+                      :items="items"
+                      item-text="name"
+                      item-value="id"
+                      label="Select Election"
+                      outlined
+                    ></v-select>
+
+                    <v-text-field
+                      v-model="spectrumText"
+                      label="Spectrum Name"
+                      outlined
+                    ></v-text-field>
+
+                    <v-text-field
+                      v-model="issueText"
+                      label="Issue"
+                      outlined
+                    ></v-text-field>
+                  </div>
+                  <div v-if="mcq">
+                    <v-select
+                      v-model="election"
+                      :items="items"
+                      item-text="name"
+                      item-value="id"
+                      label="Select Election"
+                      outlined
+                    ></v-select>
+
+                    <v-text-field
+                      v-model="spectrumMcq"
+                      label="Spectrum Name"
+                      outlined
+                    ></v-text-field>
+
+                    <v-text-field
+                      v-model="issueMcq"
+                      label="Issue"
+                      outlined
+                    ></v-text-field>
+
+                    <v-text-field
+                      v-model="answerMcq"
+                      label="Answer"
+                      outlined
+                    ></v-text-field>
+
+                  </div>
+                </v-form>
+                <v-btn v-if = "buttonSubmit" color="blue darken-1" dark @click="submit()" :disabled="!valid" :loading="loading">Save</v-btn>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-dialog>
+      </v-col>  
     
       <v-col cols="12" v-if="table">
         <v-data-table :headers="headers" :items="data" class="elevation-1" >

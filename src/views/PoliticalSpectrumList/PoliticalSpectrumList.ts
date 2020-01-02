@@ -1,9 +1,11 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import axios from 'axios';
+import Test from '../../components/Test.vue'
 
 @Component({
   components: {
+    Test
   }
 })
 export default class PoliticalSpectrumList extends Vue {
@@ -30,17 +32,31 @@ export default class PoliticalSpectrumList extends Vue {
   max = "";
   issue = "";
 
-  /*==== dropdown variables ======*/
+  spectrumText = "";
+  issueText = "";
+
+  spectrumMcq = "";
+  issueMcq = "";
+  answerMcq = "";
+
+  /*===== dropdown variables ======*/
   items= [];
   items2= [];
+  /*===== type dropdown =====*/
+  selectTypeItem = ["Bird", "Mcq", "Text"];
+  bird = false;
+  mcq = false;
+  text = false;
+  buttonSubmit = false;
 
-  /*==== data table varibles ======*/
+  /*===== data table varibles ======*/
   headers = [
     { text: 'Id', value: 'id' },
     { text: 'Political Spectrum Name', value: 'spectrum' },
     { text: 'Min', value: 'lowText' },
     { text: 'Max', value: 'highText' },
     { text: 'Issue', value: 'issueName' },
+    { text: 'Answer', value: 'answers' },
     // { text: 'Election Name', value: 'electionName' },
     // { text: 'Election Id', value: 'electionId', align: ' d-none' },
     // { text: 'Active', value: 'active', align: ' d-none' },
@@ -54,9 +70,10 @@ export default class PoliticalSpectrumList extends Vue {
     this.mainComponent = false;
     this.baseUrl = this.$store.state.baseUrl;
     this.token = this.$store.state.token;
+    console.log(this.token)
     //geting all distric list
     const districData = await axios.post(this.baseUrl+"get-all-election-list", {"token": this.token});
-    console.log(districData.data.data)
+    console.log(districData.data.data)    
     const newDistData = districData.data.data.map((el:any)=>{
       return {
         id: el.id,
@@ -171,4 +188,27 @@ export default class PoliticalSpectrumList extends Vue {
     this.data = res.data.data
     this.table = true;
   }
+
+  // type checking
+  itemChanged(data:any){
+    console.log(data);
+    this.buttonSubmit = true;
+    if(data === "Bird"){
+      this.bird = true;
+      this.text = false;
+      this.mcq = false;
+    }
+    else if(data === "Mcq"){
+      this.bird = false;
+      this.text = false;
+      this.mcq = true;
+    }
+    else if(data === "Text"){
+      this.bird = false;
+      this.text = true;
+      this.mcq = false;
+    }
+  }
+
+  // :rules="[v => !!v || 'Item is required']"
 }
