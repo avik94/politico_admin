@@ -43,7 +43,9 @@ export default class PoliticalSpectrumList extends Vue {
   items= [];
   items2= [];
   /*===== type dropdown =====*/
-  selectTypeItem = ["Bird", "Mcq", "Text"];
+  selectTypeItem = ["Bard", "Mcq", "Text"];
+  chooseOption = [2,3,4,5,6,7,8,9,10]
+
   bird = false;
   mcq = false;
   text = false;
@@ -193,7 +195,7 @@ export default class PoliticalSpectrumList extends Vue {
   itemChanged(data:any){
     console.log(data);
     this.buttonSubmit = true;
-    if(data === "Bird"){
+    if(data === "Bard"){
       this.bird = true;
       this.text = false;
       this.mcq = false;

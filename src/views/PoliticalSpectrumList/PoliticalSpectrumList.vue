@@ -118,6 +118,13 @@
                       outlined
                     ></v-text-field>
 
+                    <v-select
+                      v-model="election"
+                      :items="chooseOption"
+                      label="Choose Number of Answer"
+                      outlined
+                    ></v-select>
+
                     <v-text-field
                       v-model="answerMcq"
                       label="Answer"
