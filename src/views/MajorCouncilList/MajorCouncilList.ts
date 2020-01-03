@@ -131,7 +131,7 @@ export default class MajorCouncilList extends Vue {
     // @ts-ignore
     this.localCouncil = {name:item.localCouncilName,id:item.localCouncilId}
     this.dialog = true;
-    this.editIndex =1;
+    this.editIndex = 1;
     this.editData = item
     console.log(this.editData);
   }

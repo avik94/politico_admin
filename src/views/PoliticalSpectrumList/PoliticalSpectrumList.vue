@@ -89,7 +89,7 @@
                       label="Spectrum Name"
                       outlined
                     ></v-text-field>
-
+ 
                     <v-text-field
                       v-model="issueText"
                       label="Issue"
@@ -113,23 +113,38 @@
                     ></v-text-field>
 
                     <v-text-field
+                      v-model="minMcq"
+                      label="Min Limit"
+                      outlined
+                    ></v-text-field>
+
+                    <v-text-field
+                      v-model="maxMcq"
+                      label="Max Limit"
+                      outlined
+                    ></v-text-field>
+
+                    <v-text-field
                       v-model="issueMcq"
                       label="Issue"
                       outlined
                     ></v-text-field>
 
                     <v-select
-                      v-model="election"
+                      v-model="option"
                       :items="chooseOption"
                       label="Choose Number of Answer"
                       outlined
+                      @input="optionSelect(option)"
                     ></v-select>
-
-                    <v-text-field
-                      v-model="answerMcq"
-                      label="Answer"
-                      outlined
-                    ></v-text-field>
+                    
+                    <div v-for="(item,index) in answer" v-bind:key="item">
+                      <v-text-field
+                        v-model="answerVal[index]"
+                        label="Answer"                     
+                        outlined
+                      ></v-text-field>
+                    </div>
 
                   </div>
                 </v-form>
@@ -154,45 +169,124 @@
                   <v-container>
                     <v-row>
                       <v-col cols="12">
-                        <v-form  v-model="valid" ref="form">
+                        <v-select
+                          v-model="selectType"
+                          :items="selectTypeItem"
+                          @input="itemChanged"
+                          label="Select Type"
+                          :rules="[v => !!v || 'Item is required']"
+                          outlined
+                        ></v-select>
+                       <v-form  v-model="valid" ref="form">                  
+                        <div v-if="bird">
                           <v-select
                             v-model="election"
                             :items="items"
                             item-text="name"
                             item-value="id"
                             label="Select Election"
-                            :rules="[v => !!v || 'Item is required']"
                             outlined
                           ></v-select>
 
                           <v-text-field
                             v-model="spectrum"
                             label="Spectrum Name"
-                            :rules="[v => !!v || 'Item is required']"
                             outlined
                           ></v-text-field>
 
                           <v-text-field
                             v-model="min"
                             label="Min Limit"
-                            :rules="[v => !!v || 'Item is required']"
                             outlined
                           ></v-text-field>
 
                           <v-text-field
                             v-model="max"
                             label="Max Limit"
-                            :rules="[v => !!v || 'Item is required']"
                             outlined
                           ></v-text-field>
 
                           <v-text-field
                             v-model="issue"
                             label="Issue"
-                            :rules="[v => !!v || 'Item is required']"
                             outlined
                           ></v-text-field>
-                        </v-form>
+                        </div>
+
+                        <div v-if="text">
+                          <v-select
+                            v-model="election"
+                            :items="items"
+                            item-text="name"
+                            item-value="id"
+                            label="Select Election"
+                            outlined
+                          ></v-select>
+
+                          <v-text-field
+                            v-model="spectrumText"
+                            label="Spectrum Name"
+                            outlined
+                          ></v-text-field>
+      
+                          <v-text-field
+                            v-model="issueText"
+                            label="Issue"
+                            outlined
+                          ></v-text-field>
+                        </div>
+                        <div v-if="mcq">
+                          <v-select
+                            v-model="election"
+                            :items="items"
+                            item-text="name"
+                            item-value="id"
+                            label="Select Election"
+                            outlined
+                          ></v-select>
+
+                          <v-text-field
+                            v-model="spectrumMcq"
+                            label="Spectrum Name"
+                            outlined
+                          ></v-text-field>
+
+                          <v-text-field
+                            v-model="minMcq"
+                            label="Min Limit"
+                            outlined
+                          ></v-text-field>
+
+                          <v-text-field
+                            v-model="maxMcq"
+                            label="Max Limit"
+                            outlined
+                          ></v-text-field>
+
+                          <v-text-field
+                            v-model="issueMcq"
+                            label="Issue"
+                            outlined
+                          ></v-text-field>
+
+                          <v-select
+                            v-model="option"
+                            :items="chooseOption"
+                            label="Choose Number of Answer"
+                            outlined
+                            @input="optionSelect(option)"
+                          ></v-select>
+                          
+                          <div v-for="(item,index) in answer" v-bind:key="item">
+                            <v-text-field
+                              v-model="answerVal[index]"
+                              label="Answer"                     
+                              outlined
+                            ></v-text-field>
+                          </div>
+
+                        </div>
+                       </v-form>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -201,7 +295,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <!-- <v-btn color="blue darken-1" text @click="close">Cancel</v-btn> -->
-                  <v-btn color="blue darken-1" dark @click="submit()" :disabled="!valid" :loading="loading">Save</v-btn>
+                  <v-btn color="blue darken-1" dark @click="editDataSave()" :disabled="!valid" :loading="loading">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
