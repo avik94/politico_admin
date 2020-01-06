@@ -112,7 +112,7 @@
                       outlined
                     ></v-text-field>
 
-                    <v-text-field
+                    <!-- <v-text-field
                       v-model="minMcq"
                       label="Min Limit"
                       outlined
@@ -122,7 +122,7 @@
                       v-model="maxMcq"
                       label="Max Limit"
                       outlined
-                    ></v-text-field>
+                    ></v-text-field> -->
 
                     <v-text-field
                       v-model="issueMcq"
@@ -251,7 +251,7 @@
                             outlined
                           ></v-text-field>
 
-                          <v-text-field
+                          <!-- <v-text-field
                             v-model="minMcq"
                             label="Min Limit"
                             outlined
@@ -261,7 +261,7 @@
                             v-model="maxMcq"
                             label="Max Limit"
                             outlined
-                          ></v-text-field>
+                          ></v-text-field> -->
 
                           <v-text-field
                             v-model="issueMcq"

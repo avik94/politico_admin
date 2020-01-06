@@ -16,6 +16,7 @@
                     <v-text-field
                         v-model="password"
                         label="Password"
+                        type = "password"
                         outlined
                     ></v-text-field>
                 </v-form>              

@@ -501,9 +501,14 @@ export default class PoliticalSpectrumList extends Vue {
   }
 
   newItem(){
+    this.selectType = "mcq";    
+    // this.editIndex = 0;   
+    this.bird = false;
+    this.text = false;
+    this.mcq = true;
     // @ts-ignore
     this.$refs.form.reset();
-    this.editIndex = 0;
+    this.buttonSubmit = true;
   }
 
   async selectElection(item:any){
